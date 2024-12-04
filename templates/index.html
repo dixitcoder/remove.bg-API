@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Remover</title>
+    <style>
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #374151;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Form Styling */
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: border 0.3s;
+        }
+
+        input[type="file"]:hover {
+            border-color: #6b7280;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #3b82f6;
+            border: none;
+            color: white;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Image Preview Section */
+        .image-preview {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .image-preview:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-preview img:hover {
+            transform: scale(1.05);
+        }
+
+        .image-preview h2 {
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        /* Download Button Styling */
+        .image-preview a {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #10b981;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .image-preview a:hover {
+            background-color: #059669;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            form {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .image-preview {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.7em;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Upload an Image to Remove Background</h1>
+
+    <!-- Form to Upload Image -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload and Remove Background</button>
+    </form>
+
+    <!-- Section for showing the processed image and download link -->
+    {% if processed_image %}
+    <div class="image-preview">
+        <h2>Processed Image</h2>
+        <!-- Display the processed image -->
+        <img src="/uploads/{{ processed_image }}" alt="Processed Image">
+        <!-- Download link for the processed image -->
+        <p>
+            <a href="/uploads/{{ processed_image }}" download>Download Processed Image</a>
+        </p>
+    </div>
+    {% endif %}
+
+</body>
+
+</html>
